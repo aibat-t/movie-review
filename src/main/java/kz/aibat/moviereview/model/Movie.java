@@ -25,6 +25,6 @@ public class Movie {
     private String director;
     private String synopsis;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private MoviePoster poster;
 }
