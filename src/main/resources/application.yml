@@ -1,0 +1,32 @@
+server:
+  error:
+    include-message: always
+  port: 8000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/movie-review
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+application:
+  secret:
+    key: 5368566D5971337436773979244226452948404D635166546A576E5A72347537
+    expiration-minutes: 60
+  paging:
+    reviewSize: 3
+    movieSize: 12
