@@ -73,4 +73,18 @@ public class MovieService {
 
         return movieDTO;
     }
+
+    public MovieDTO update(MovieDTO movieDTO) {
+        Movie movie = Movie.builder()
+                .id(movieDTO.getId())
+                .name(movieDTO.getName())
+                .director(movieDTO.getDirector())
+                .synopsis(movieDTO.getSynopsis())
+                .releaseDate(movieDTO.getReleaseDate())
+                .build();
+
+        Movie updatedMovie = movieRepository.save(movie);
+
+        return createMovieDTO(updatedMovie);
+    }
 }
