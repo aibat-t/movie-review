@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MovieService {
@@ -74,16 +76,20 @@ public class MovieService {
         return movieDTO;
     }
 
+    @Transactional
     public MovieDTO update(MovieDTO movieDTO) {
-        Movie movie = Movie.builder()
-                .id(movieDTO.getId())
-                .name(movieDTO.getName())
-                .director(movieDTO.getDirector())
-                .synopsis(movieDTO.getSynopsis())
-                .releaseDate(movieDTO.getReleaseDate())
-                .build();
+        Optional<Movie> movieOptional = movieRepository.findById(movieDTO.getId());
+        if(movieOptional.isEmpty()) {
+            throw new EntityNotFoundException("movie with " + movieDTO.getId() + " is not found");
+        }
 
-        Movie updatedMovie = movieRepository.save(movie);
+        Movie movieToUpdate = movieOptional.get();
+        movieToUpdate.setName(movieDTO.getName());
+        movieToUpdate.setDirector(movieDTO.getDirector());
+        movieToUpdate.setSynopsis(movieDTO.getSynopsis());
+        movieToUpdate.setReleaseDate(movieDTO.getReleaseDate());
+
+        Movie updatedMovie = movieRepository.save(movieToUpdate);
 
         return createMovieDTO(updatedMovie);
     }
