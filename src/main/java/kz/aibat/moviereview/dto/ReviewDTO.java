@@ -1,5 +1,6 @@
 package kz.aibat.moviereview.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,14 @@ public class ReviewDTO {
     @Size(min = 40, max = 1500)
     private String mainText;
 
+    @NotBlank
     private Date publicDate;
 
     @NotBlank
     private UserDTO author;
+
+    @JsonProperty("movie_id")
+    @NotBlank
+    private Long movieId;
+
 }

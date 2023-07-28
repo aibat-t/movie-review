@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -25,6 +26,9 @@ public class Movie {
     private String director;
     private String synopsis;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MoviePoster poster;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
+    private List<Review> reviewList;
 }
