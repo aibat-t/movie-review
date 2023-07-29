@@ -12,6 +12,5 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     Page<Movie> findAllByOrderByReleaseDateDesc(Pageable page);
 
-    @Transactional
     Integer deleteMovieById(Long id);
 }

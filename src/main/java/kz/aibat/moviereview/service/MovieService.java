@@ -55,13 +55,14 @@ public class MovieService {
         return createMovieDTO(newMovie);
     }
 
+    @Transactional
     public Integer delete(Long id) {
         return movieRepository.deleteMovieById(id);
     }
 
     private MovieDTO createMovieDTO(Movie movie) {
 
-        MovieDTO movieDTO =  MovieDTO.builder()
+        MovieDTO movieDTO = MovieDTO.builder()
                 .name(movie.getName())
                 .id(movie.getId())
                 .synopsis(movie.getSynopsis())
@@ -69,7 +70,7 @@ public class MovieService {
                 .director(movie.getDirector())
                 .build();
 
-        if(movie.getPoster() != null){
+        if (movie.getPoster() != null) {
             movieDTO.setPosterName(movie.getPoster().getName());
         }
 
@@ -79,7 +80,7 @@ public class MovieService {
     @Transactional
     public MovieDTO update(MovieDTO movieDTO) {
         Optional<Movie> movieOptional = movieRepository.findById(movieDTO.getId());
-        if(movieOptional.isEmpty()) {
+        if (movieOptional.isEmpty()) {
             throw new EntityNotFoundException("movie with " + movieDTO.getId() + " is not found");
         }
 
