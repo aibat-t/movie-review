@@ -1,24 +1,17 @@
-server:
-  error:
-    include-message: always
-    include-binding-errors: always
-  port: 8000
-
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/movie-review
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2://mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
         format_sql: false
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: h2
   servlet:
     multipart:
       max-file-size: 5MB
