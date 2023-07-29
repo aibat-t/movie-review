@@ -1,11 +1,12 @@
-package kz.aibat.moviereview.repo;
+package kz.aibat.moviereview.repository;
 
 import kz.aibat.moviereview.model.User;
-import kz.aibat.moviereview.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Collections;
 

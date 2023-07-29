@@ -21,7 +21,7 @@ public class MovieService {
     private final MovieRepository movieRepository;
 
     @Value("${application.paging.movieSize}")
-    private Integer movieSize;
+    private Integer movieSize = 12;
 
     @Transactional
     public Page<MovieDTO> getAllByPage(Integer pageNo) {
@@ -29,7 +29,11 @@ public class MovieService {
 
         Page<Movie> reviewPage = movieRepository.findAllByOrderByReleaseDateDesc(paging);
 
-        return reviewPage.map(this::createMovieDTO);
+        if(reviewPage != null) {
+            return reviewPage.map(this::createMovieDTO);
+        }
+
+        return null;
     }
 
     @Transactional
