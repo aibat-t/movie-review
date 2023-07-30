@@ -40,7 +40,7 @@ public class MovieService {
     public MovieDTO getById(Long id) {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("no movie with this id")
+                        () -> new EntityNotFoundException("no movie with this id +" + id)
                 );
         return createMovieDTO(movie);
     }
