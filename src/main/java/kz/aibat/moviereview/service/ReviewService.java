@@ -1,6 +1,5 @@
 package kz.aibat.moviereview.service;
 
-
 import jakarta.persistence.EntityNotFoundException;
 import kz.aibat.moviereview.dto.ReviewDTO;
 import kz.aibat.moviereview.dto.UserDTO;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-
 @Service
 @RequiredArgsConstructor
 @PropertySource("classpath:application.yml")
@@ -30,12 +28,10 @@ public class ReviewService {
     @Value("${application.paging.reviewSize}")
     private Integer pageSize;
 
+    //TODO write method to find review by page and movie id
+    //but first review should be by current user if exist
     public Page<ReviewDTO> getAllByPage(Integer pageNo) {
-        Pageable paging = PageRequest.of(pageNo, pageSize);
-
-        Page<Review> reviewPage =  reviewRepository.findAllByOrderByPublicDateDesc(paging);
-
-        return reviewPage.map(this::createReviewDTO);
+        return null;
     }
 
     public ReviewDTO getById(Long id) {

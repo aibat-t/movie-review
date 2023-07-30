@@ -4,6 +4,7 @@ import kz.aibat.moviereview.model.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,5 +14,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Transactional
     Integer deleteReviewById(Long id);
 
-    Page<Review> findAllByOrderByPublicDateDesc(Pageable page);
+    //TODO write query to find review by movie id and sort them
+    @Query("")
+    Page<Review> findReviewByMovieOrderByPublicDateDesc(Pageable pageable);
 }
