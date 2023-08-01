@@ -18,8 +18,8 @@ public class ReviewController {
     @GetMapping("/page")
     public ResponseEntity<Page<ReviewDTO>> getReviewPage (
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "movieId") Integer movieId) {
-        return ResponseEntity.ok(reviewService.getAllByPage(page));
+            @RequestParam(value = "movie_id") Long movieId) {
+        return ResponseEntity.ok(reviewService.getAllByPageAndMovieId(page, movieId));
     }
 
     @GetMapping("/{id}")

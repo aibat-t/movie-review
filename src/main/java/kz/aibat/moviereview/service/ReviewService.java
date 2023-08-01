@@ -12,10 +12,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,10 +30,25 @@ public class ReviewService {
     @Value("${application.paging.reviewSize}")
     private Integer pageSize;
 
-    //TODO write method to find review by page and movie id
-    //but first review should be by current user if exist
-    public Page<ReviewDTO> getAllByPage(Integer pageNo) {
-        return null;
+    public Page<ReviewDTO> getAllByPageAndMovieId(Integer pageNo, Long movieId) {
+        Integer actualPageSize = pageSize;
+
+        User currentUser = (User) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+
+        Optional<Review> currentUserReview = reviewRepository
+                .findReviewByUserIdAndMovieId(currentUser.getId(), movieId);
+        if(currentUserReview.isPresent()){
+            actualPageSize = pageSize - 1;
+
+            //TODO создать свой pageble (size, total elements, content (где первый элемент текущего пользователя) и тд)
+            //туда все записать
+        }
+
+        Pageable pageable = PageRequest.of(pageNo, actualPageSize);
+        Page<Review> reviewPage = reviewRepository.findReviewByMovieIdOrderByPublicDateDesc(movieId, pageable);
+
+        return reviewPage.map(this::createReviewDTO);
     }
 
     public ReviewDTO getById(Long id) {
@@ -43,6 +60,7 @@ public class ReviewService {
         return createReviewDTO(review);
     }
 
+    //TODO нужно что бы записывалось по id movie и использовать в DTO id юзера и фильма
     public ReviewDTO addReview(ReviewDTO reviewDTO){
 
         User user = userService.getUserById(reviewDTO.getAuthor().getId());
@@ -63,6 +81,7 @@ public class ReviewService {
         return reviewRepository.deleteReviewById(id);
     }
 
+    //TODO убрать из DTO пользователя и добаить туда его id
     private ReviewDTO createReviewDTO(Review review) {
 
         return ReviewDTO.builder()
