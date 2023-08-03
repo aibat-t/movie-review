@@ -28,8 +28,4 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User author;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
 }

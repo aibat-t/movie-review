@@ -29,6 +29,6 @@ public class Movie {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MoviePoster poster;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Review> reviewList;
 }

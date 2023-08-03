@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-review-deployment
+  labels:
+    app: movie-review
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie-review
+  template:
+    metadata:
+      labels:
+        app: movie-review
+    spec:
+      containers:
+        - name: movie-review
+          image: f1ash228/movie-review-backend:latest
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: movie-review-service
+spec:
+  selector:
+    app.kubernetes.io/name: movie-review
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000

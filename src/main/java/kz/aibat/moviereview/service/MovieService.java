@@ -29,11 +29,7 @@ public class MovieService {
 
         Page<Movie> reviewPage = movieRepository.findAllByOrderByReleaseDateDesc(paging);
 
-        if(reviewPage != null) {
-            return reviewPage.map(this::createMovieDTO);
-        }
-
-        return null;
+        return reviewPage.map(this::createMovieDTO);
     }
 
     @Transactional
